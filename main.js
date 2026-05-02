@@ -50,15 +50,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Mobile Menu Toggle (Basic implementation)
+  // Mobile Menu Toggle
   const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
   const navLinks = document.querySelector('.nav-links');
+  const navLinksItems = document.querySelectorAll('.nav-link');
   
-  if(mobileMenuBtn && navLinks) {
+  if (mobileMenuBtn && navLinks) {
     mobileMenuBtn.addEventListener('click', () => {
-      // Toggle logic can be expanded. For a simple site, 
-      // we might just alert or show a basic modal.
-      alert('Mobile menu clicked. In a full implementation, this opens a side drawer.');
+      mobileMenuBtn.classList.toggle('active');
+      navLinks.classList.toggle('active');
+      
+      // Change icon
+      const icon = mobileMenuBtn.querySelector('i');
+      if (mobileMenuBtn.classList.contains('active')) {
+        icon.classList.remove('fa-bars');
+        icon.classList.add('fa-xmark');
+      } else {
+        icon.classList.remove('fa-xmark');
+        icon.classList.add('fa-bars');
+      }
+    });
+
+    // Close mobile menu when a link is clicked
+    navLinksItems.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenuBtn.classList.remove('active');
+        navLinks.classList.remove('active');
+        const icon = mobileMenuBtn.querySelector('i');
+        icon.classList.remove('fa-xmark');
+        icon.classList.add('fa-bars');
+      });
     });
   }
 });

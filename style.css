@@ -213,10 +213,26 @@ img {
   font-weight: 500;
   color: var(--text-main);
   transition: color var(--transition-fast);
+  position: relative;
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -4px;
+  left: 0;
+  background-color: var(--primary);
+  transition: width 0.3s ease;
 }
 
 .nav-link:hover {
   color: var(--primary);
+}
+
+.nav-link:hover::after {
+  width: 100%;
 }
 
 .nav-actions {
@@ -232,6 +248,13 @@ img {
   font-size: 1.5rem;
   color: var(--text-main);
   cursor: pointer;
+  z-index: 2000;
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu-btn.active {
+  color: var(--primary);
+  transform: rotate(90deg);
 }
 
 /* Hero Section */
@@ -756,7 +779,27 @@ img {
 }
 
 @media (max-width: 768px) {
-  .nav-links, .nav-actions .btn-outline {
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 80%;
+    max-width: 300px;
+    height: 100vh;
+    background: var(--white);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1500;
+  }
+  
+  .nav-links.active {
+    right: 0;
+  }
+
+  .nav-actions .btn-outline {
     display: none;
   }
   
@@ -781,14 +824,60 @@ img {
   }
 }
 
-/* Animations */
+/* Animations & Motion Design */
 .fade-up {
   opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  transform: translateY(40px);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .fade-up.visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s ease-out;
+}
+
+.fade-in.visible {
+  opacity: 1;
+}
+
+.scale-in {
+  opacity: 0;
+  transform: scale(0.9);
+  transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scale-in.visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Stagger Classes */
+.stagger-1 { transition-delay: 100ms; }
+.stagger-2 { transition-delay: 200ms; }
+.stagger-3 { transition-delay: 300ms; }
+.stagger-4 { transition-delay: 400ms; }
+.stagger-5 { transition-delay: 500ms; }
+.stagger-6 { transition-delay: 600ms; }
+
+/* Micro-interactions */
+.service-card, .testimonial-card, .contact-info-card {
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+}
+
+.service-card:hover, .testimonial-card:hover, .contact-info-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
+}
+
+img {
+  transition: transform 0.5s ease;
+}
+
+.doctor-profile:hover .doctor-image {
+  transform: scale(1.05);
 }
